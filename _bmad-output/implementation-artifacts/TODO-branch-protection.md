@@ -1,5 +1,11 @@
 # TODO - Branch Protection Enforcement
 
+## Статус (применено)
+
+**2026-03-12:** для `Arkus61/avatar`, ветка `main` — classic branch protection через API (`scripts/apply-branch-protection.ps1`): обязательны checks `ci-web / web`, `ci-api / api`, `ci-contracts / contracts`; approving reviews = 0. Первый push истории: начальный коммит монорепо.
+
+Проверь в UI: **Settings → Branches → main** и при желании включи «Require pull request before merging» отдельно.
+
 ## Если в PowerShell: «gh не распознано»
 
 После `winget install` путь часто **ещё не в PATH** в текущем окне. Сделай так:
@@ -41,13 +47,13 @@ powershell -ExecutionPolicy Bypass -File scripts/apply-branch-protection.ps1
 
 ## Чеклист (отметь после выполнения)
 
-- [ ] Enable repository branch protection (or rulesets) for default branch.
-- [ ] Require passing checks before merge:
+- [x] Enable repository branch protection (or rulesets) for default branch.
+- [x] Require passing checks before merge:
   - `ci-web / web`
   - `ci-api / api`
   - `ci-contracts / contracts`
-- [ ] Disable direct pushes to protected branch (except approved maintainers if required).
-- [ ] Verify merge is blocked when any required check fails.
+- [ ] Disable direct pushes / require PR-only (optional; сейчас только required checks; настрой в Rulesets при необходимости).
+- [ ] Verify merge is blocked when any required check fails (сделай тестовый PR с поломанным lint).
 
 ## Ручной fallback: GitHub CLI (classic API)
 
@@ -65,6 +71,11 @@ gh api -X PUT "repos/OWNER/REPO/branches/BRANCH/protection" --input - <<'EOF'
     ]
   },
   "enforce_admins": false,
+  "required_pull_request_reviews": {
+    "dismiss_stale_reviews": false,
+    "require_code_owner_reviews": false,
+    "required_approving_review_count": 0
+  },
   "restrictions": null
 }
 EOF

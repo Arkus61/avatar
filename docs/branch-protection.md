@@ -28,4 +28,6 @@ From repo root after `gh auth login` and `origin` on GitHub:
 powershell -ExecutionPolicy Bypass -File scripts/apply-branch-protection.ps1
 ```
 
+REST `PUT .../protection` требует блок **`required_pull_request_reviews`** (можно `required_approving_review_count: 0`, если ревью не нужны) — см. `scripts/apply-branch-protection.ps1`.
+
 See also `_bmad-output/implementation-artifacts/TODO-branch-protection.md` for the full checklist and **GitHub CLI** JSON example.

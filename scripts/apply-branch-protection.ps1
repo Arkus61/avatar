@@ -48,6 +48,7 @@ if (-not $Branch) {
 }
 
 # GitHub REST: required_status_checks uses "checks" with { "context": "..." } per check run name.
+# GitHub REST requires `required_pull_request_reviews` key; count 0 = no approving reviews required.
 $body = @"
 {
   "required_status_checks": {
@@ -59,6 +60,11 @@ $body = @"
     ]
   },
   "enforce_admins": false,
+  "required_pull_request_reviews": {
+    "dismiss_stale_reviews": false,
+    "require_code_owner_reviews": false,
+    "required_approving_review_count": 0
+  },
   "restrictions": null
 }
 "@
