@@ -6,6 +6,8 @@
 
 Проверь в UI: **Settings → Branches → main** и при желании включи «Require pull request before merging» отдельно.
 
+**Проверка CI (2026-03-23):** после `fix(ci): web test path…` все три workflow на `main` — **success** (`ci-web`, `ci-api`, `ci-contracts`).
+
 ## Если в PowerShell: «gh не распознано»
 
 После `winget install` путь часто **ещё не в PATH** в текущем окне. Сделай так:
