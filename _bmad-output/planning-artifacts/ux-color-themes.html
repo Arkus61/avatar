@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>avatar - UX Color Themes</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { margin: 0; font-family: Segoe UI, Arial, sans-serif; background: #0f172a; color: #e2e8f0; }
+    .wrap { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .card { border: 1px solid #334155; border-radius: 12px; overflow: hidden; background: #111827; }
+    .head { padding: 10px 12px; font-weight: 700; background: #1f2937; }
+    .swatches { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .sw { height: 72px; padding: 8px; font-size: 12px; box-sizing: border-box; }
+    .note { margin-top: 16px; font-size: 14px; color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>avatar - Color Theme Candidates</h1>
+    <p>Desktop-first operational UI. Semantic states must remain consistent across all agency themes.</p>
+    <div class="grid">
+      <section class="card">
+        <div class="head">A. Operational Clarity (Recommended)</div>
+        <div class="swatches">
+          <div class="sw" style="background:#0f172a;color:#e2e8f0">bg #0f172a</div>
+          <div class="sw" style="background:#1e293b;color:#f8fafc">surface #1e293b</div>
+          <div class="sw" style="background:#3b82f6;color:#0b1020">primary #3b82f6</div>
+          <div class="sw" style="background:#22c55e;color:#052e16">success #22c55e</div>
+          <div class="sw" style="background:#f59e0b;color:#3b1f00">warning #f59e0b</div>
+          <div class="sw" style="background:#ef4444;color:#2a0404">danger #ef4444</div>
+        </div>
+      </section>
+      <section class="card">
+        <div class="head">B. Calm Enterprise</div>
+        <div class="swatches">
+          <div class="sw" style="background:#111827;color:#e5e7eb">bg #111827</div>
+          <div class="sw" style="background:#374151;color:#f3f4f6">surface #374151</div>
+          <div class="sw" style="background:#60a5fa;color:#082f49">primary #60a5fa</div>
+          <div class="sw" style="background:#34d399;color:#052e16">success #34d399</div>
+          <div class="sw" style="background:#fbbf24;color:#422006">warning #fbbf24</div>
+          <div class="sw" style="background:#f87171;color:#450a0a">danger #f87171</div>
+        </div>
+      </section>
+      <section class="card">
+        <div class="head">C. Light Ops</div>
+        <div class="swatches">
+          <div class="sw" style="background:#f8fafc;color:#0f172a">bg #f8fafc</div>
+          <div class="sw" style="background:#e2e8f0;color:#0f172a">surface #e2e8f0</div>
+          <div class="sw" style="background:#2563eb;color:#eff6ff">primary #2563eb</div>
+          <div class="sw" style="background:#16a34a;color:#f0fdf4">success #16a34a</div>
+          <div class="sw" style="background:#d97706;color:#fffbeb">warning #d97706</div>
+          <div class="sw" style="background:#dc2626;color:#fef2f2">danger #dc2626</div>
+        </div>
+      </section>
+    </div>
+    <p class="note">Note: Semantic colors represent status meaning and should not be overridden by white-label accent palettes.</p>
+  </div>
+</body>
+</html>

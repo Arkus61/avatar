@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>avatar - Clickable Prototype</title>
+  <style>
+    body { margin: 0; font-family: Segoe UI, Arial, sans-serif; background: #0f172a; color: #e2e8f0; }
+    .wrap { max-width: 1180px; margin: 16px auto; padding: 0 16px; }
+    .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .btn { border: 1px solid #475569; background: #1e293b; color: #e2e8f0; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+    .grid { display: grid; grid-template-columns: 1fr 320px; gap: 12px; }
+    .card { background: #111827; border: 1px solid #334155; border-radius: 12px; padding: 12px; }
+    .req { display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 10px; border: 1px solid #334155; border-radius: 8px; margin-bottom: 8px; }
+    .chip { padding: 2px 8px; border-radius: 999px; font-size: 12px; border: 1px solid #64748b; }
+    .urgent { border-color: #f59e0b; color: #fbbf24; }
+    .ok { border-color: #22c55e; color: #86efac; }
+    .muted { color: #94a3b8; font-size: 13px; }
+    dialog { border: 1px solid #334155; border-radius: 12px; background: #0b1220; color: #e2e8f0; width: 420px; }
+    input, select { width: 100%; margin-top: 6px; margin-bottom: 10px; padding: 8px; border-radius: 6px; border: 1px solid #475569; background: #111827; color: #e2e8f0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <h2>avatar prototype - Request to Progress</h2>
+      <button class="btn" id="newReq">+ Add Request</button>
+    </div>
+    <div class="grid">
+      <section class="card">
+        <h3>Calendar / Request Queue</h3>
+        <p class="muted">Goal: understand urgency in <= 5s and move request lifecycle quickly.</p>
+        <div id="list"></div>
+      </section>
+      <aside class="card">
+        <h3>Meeting-Ready Summary</h3>
+        <div id="summary">
+          <p>In progress: <strong id="inprog">0</strong></p>
+          <p>Completed: <strong id="done">0</strong></p>
+          <p>Blocked/At risk: <strong id="risk">0</strong></p>
+          <hr />
+          <p>Manual KPI snapshot: <strong>+22% output</strong></p>
+          <p class="muted">Use this panel during client calls.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <dialog id="dlg">
+    <h3>New Request</h3>
+    <label>Title <input id="title" placeholder="Campaign short video" /></label>
+    <label>Priority
+      <select id="priority">
+        <option>normal</option>
+        <option>urgent</option>
+      </select>
+    </label>
+    <div style="display:flex; gap:8px; justify-content:flex-end;">
+      <button class="btn" id="cancel">Cancel</button>
+      <button class="btn" id="save">Save</button>
+    </div>
+  </dialog>
+
+  <script>
+    const state = [
+      { t: "Launch teaser video", s: "in-progress", p: "urgent" },
+      { t: "Weekly recap clip", s: "upcoming", p: "normal" },
+      { t: "Creator promo cut", s: "completed", p: "normal" }
+    ];
+    const list = document.getElementById("list");
+    const dlg = document.getElementById("dlg");
+    function render() {
+      list.innerHTML = "";
+      let inprog = 0, done = 0, risk = 0;
+      state.forEach((r, i) => {
+        if (r.s === "in-progress") inprog++;
+        if (r.s === "completed") done++;
+        if (r.p === "urgent" && r.s !== "completed") risk++;
+        const row = document.createElement("div");
+        row.className = "req";
+        row.innerHTML = `
+          <div>
+            <div><strong>${r.t}</strong></div>
+            <div class="muted">${r.s}</div>
+          </div>
+          <div>
+            <span class="chip ${r.p === "urgent" ? "urgent" : "ok"}">${r.p}</span>
+            <button class="btn" data-i="${i}" data-a="next">Next status</button>
+          </div>
+        `;
+        list.appendChild(row);
+      });
+      document.getElementById("inprog").textContent = inprog;
+      document.getElementById("done").textContent = done;
+      document.getElementById("risk").textContent = risk;
+      list.querySelectorAll("button[data-a='next']").forEach(b => {
+        b.onclick = () => {
+          const idx = Number(b.dataset.i);
+          const order = ["upcoming", "in-progress", "completed"];
+          const cur = order.indexOf(state[idx].s);
+          state[idx].s = order[Math.min(cur + 1, 2)];
+          render();
+        };
+      });
+    }
+    document.getElementById("newReq").onclick = () => dlg.showModal();
+    document.getElementById("cancel").onclick = () => dlg.close();
+    document.getElementById("save").onclick = () => {
+      const t = document.getElementById("title").value.trim();
+      const p = document.getElementById("priority").value;
+      if (!t) return;
+      state.unshift({ t, s: "upcoming", p });
+      document.getElementById("title").value = "";
+      dlg.close();
+      render();
+    };
+    render();
+  </script>
+</body>
+</html>

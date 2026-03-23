@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>avatar - UX Design Directions</title>
+  <style>
+    body { margin: 0; font-family: Segoe UI, Arial, sans-serif; background: #0b1220; color: #e2e8f0; }
+    .wrap { max-width: 1200px; margin: 24px auto; padding: 0 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+    .d { border: 1px solid #334155; border-radius: 14px; overflow: hidden; background: #111827; }
+    .h { padding: 12px; background: #1f2937; font-weight: 700; }
+    .b { padding: 12px; font-size: 14px; line-height: 1.45; }
+    .k { color: #93c5fd; font-weight: 600; }
+    .tag { display:inline-block; margin:4px 6px 0 0; padding:3px 8px; border:1px solid #475569; border-radius:999px; font-size:12px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>avatar - Design Direction Explorations</h1>
+    <p>Operations-first UX for request lifecycle, status clarity, and meeting-ready KPI communication.</p>
+    <div class="grid">
+      <section class="d"><div class="h">1. Operational Clarity (Chosen)</div><div class="b">
+        <p><span class="k">Layout:</span> calendar/status first, with contextual side panel.</p>
+        <p><span class="k">Strength:</span> fastest scan and triage for agency operators.</p>
+        <span class="tag">dense</span><span class="tag">status-forward</span><span class="tag">meeting-ready</span>
+      </div></section>
+      <section class="d"><div class="h">2. Client Storyline</div><div class="b">
+        <p><span class="k">Layout:</span> timeline narrative from request to outcome.</p>
+        <p><span class="k">Strength:</span> strongest for non-technical client trust.</p>
+        <span class="tag">narrative</span><span class="tag">trust-oriented</span><span class="tag">lower density</span>
+      </div></section>
+      <section class="d"><div class="h">3. Dashboard Hub</div><div class="b">
+        <p><span class="k">Layout:</span> KPI-centric cards with secondary request lists.</p>
+        <p><span class="k">Strength:</span> good executive summary, weaker for daily operations.</p>
+        <span class="tag">kpi-heavy</span><span class="tag">summary-first</span><span class="tag">less action-first</span>
+      </div></section>
+      <section class="d"><div class="h">4. Split Role Workspace</div><div class="b">
+        <p><span class="k">Layout:</span> role-specific entry points for agency and client.</p>
+        <p><span class="k">Strength:</span> less cognitive mixing, but more navigation branching.</p>
+        <span class="tag">role-focused</span><span class="tag">clear boundaries</span><span class="tag">extra navigation</span>
+      </div></section>
+      <section class="d"><div class="h">5. Minimal Flow Board</div><div class="b">
+        <p><span class="k">Layout:</span> Kanban-only flow with quick actions.</p>
+        <p><span class="k">Strength:</span> very fast updates, limited schedule context.</p>
+        <span class="tag">fast edits</span><span class="tag">kanban</span><span class="tag">calendar-light</span>
+      </div></section>
+      <section class="d"><div class="h">6. Meeting Mode First</div><div class="b">
+        <p><span class="k">Layout:</span> presentation-style status + KPI screen as default.</p>
+        <p><span class="k">Strength:</span> great calls, weaker day-to-day editing velocity.</p>
+        <span class="tag">presentation</span><span class="tag">stakeholder-friendly</span><span class="tag">ops-second</span>
+      </div></section>
+    </div>
+  </div>
+</body>
+</html>

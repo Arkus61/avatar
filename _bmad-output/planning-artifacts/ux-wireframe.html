@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>avatar - Low-Fi Wireframe</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background: #f4f4f5; color: #111; }
+    .app { display: grid; grid-template-columns: 240px 1fr 320px; min-height: 100vh; gap: 1px; background: #d4d4d8; }
+    .panel { background: #fff; padding: 16px; box-sizing: border-box; }
+    .h { font-size: 14px; text-transform: uppercase; letter-spacing: .04em; color: #52525b; margin-bottom: 12px; }
+    .block { border: 1px dashed #a1a1aa; border-radius: 8px; padding: 12px; margin-bottom: 12px; background: #fafafa; }
+    .row { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+    .chip { border: 1px solid #a1a1aa; padding: 2px 8px; border-radius: 999px; font-size: 12px; }
+    .cta { border: 2px solid #71717a; padding: 10px; text-align: center; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="panel">
+      <div class="h">Agency Nav</div>
+      <div class="block">Brand Header / Workspace</div>
+      <div class="block">Calendar (default)</div>
+      <div class="block">Requests</div>
+      <div class="block">Assets</div>
+      <div class="block">KPI Snapshot</div>
+      <div class="block">Pilot Summary</div>
+    </aside>
+    <main class="panel">
+      <div class="h">Calendar + Status Surface</div>
+      <div class="block">
+        <div class="row"><strong>Mon</strong><span class="chip">in-progress</span></div>
+        <div class="row"><strong>Tue</strong><span class="chip">upcoming</span></div>
+        <div class="row"><strong>Wed</strong><span class="chip">completed</span></div>
+      </div>
+      <div class="cta">+ Add Request (1-2 clicks)</div>
+      <div class="block">Request Queue (priority, owner, due date)</div>
+      <div class="block">Status Timeline Strip</div>
+    </main>
+    <section class="panel">
+      <div class="h">Meeting-Ready Side Panel</div>
+      <div class="block">Current Status Summary</div>
+      <div class="block">Manual KPI Snapshot</div>
+      <div class="block">Next Actions</div>
+      <div class="block">Client-visible Notes</div>
+    </section>
+  </div>
+</body>
+</html>
