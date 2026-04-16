@@ -1,0 +1,23 @@
+[run]
+branch = True
+source = app
+omit =
+    app/__init__.py
+    app/api/__init__.py
+    app/api/v1/__init__.py
+    app/core/__init__.py
+    app/db/__init__.py
+    app/domains/__init__.py
+    app/policies/__init__.py
+    app/repositories/__init__.py
+
+[report]
+show_missing = True
+skip_covered = False
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    raise NotImplementedError
+
+[html]
+directory = htmlcov

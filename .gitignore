@@ -14,6 +14,10 @@ __pycache__/
 .ruff_cache/
 .venv/
 venv/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
 
 # Environment
 .env
