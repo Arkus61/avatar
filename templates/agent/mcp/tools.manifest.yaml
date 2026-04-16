@@ -1,0 +1,35 @@
+# Явный allow-list MCP-инструментов. Любой инструмент, не указанный здесь,
+# не будет передан в LLM и не будет исполнен.
+#
+# Формат:
+#   <server_id>:
+#     <tool_id>:
+#       enabled: bool
+#       rate_limit_per_min: int
+#       redact_args: [ "field.path", ... ]   # поля, которые не логируются
+#       description_override: str            # если хочется переписать описание для LLM
+
+filesystem:
+  read_file:
+    enabled: true
+    rate_limit_per_min: 120
+  list_directory:
+    enabled: true
+    rate_limit_per_min: 120
+  write_file:
+    enabled: false                # по умолчанию запись запрещена
+  delete_file:
+    enabled: false
+
+fetch:
+  fetch:
+    enabled: true
+    rate_limit_per_min: 30
+    redact_args: ["headers.Authorization", "headers.Cookie"]
+
+internal-http:
+  search_knowledge_base:
+    enabled: true
+    rate_limit_per_min: 60
+    description_override: >
+      Поиск во внутренней базе знаний компании. Не использовать для публичной информации.

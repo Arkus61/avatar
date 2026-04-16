@@ -1,0 +1,58 @@
+id: research.web
+name: "Web Research"
+aliases: ["web-research", "поиск-в-сети"]
+version: "0.1.0"
+description: >
+  Ищет релевантные источники по запросу, читает их, возвращает краткое резюме
+  и список цитат с URL.
+tags: ["research", "read-only"]
+
+handler: llm
+
+tools:
+  - "fetch:fetch"
+
+inputs:
+  query:
+    type: string
+    description: "Пользовательский запрос на естественном языке."
+    required: true
+  max_sources:
+    type: integer
+    description: "Сколько источников максимально посетить."
+    default: 5
+  language:
+    type: string
+    description: "Язык итогового резюме (ru|en)."
+    default: "ru"
+
+outputs:
+  summary:
+    type: string
+    description: "Структурированное резюме (200–500 слов)."
+  citations:
+    type: array
+    description: "Список объектов {url, title, quote}."
+
+limits:
+  tool_call_budget: 10
+  max_duration_sec: 90
+
+expose_a2a: true
+
+prompt: |
+  Ты отвечаешь за скилл `research.web`.
+
+  Запрос пользователя:
+  {{query}}
+
+  Алгоритм:
+  1. Сформируй 1–3 поисковых URL или используй `fetch:fetch` с поисковым endpoint,
+     заданным в переменной окружения SEARCH_ENDPOINT.
+  2. Для каждого источника извлеки ключевые факты и короткую цитату (<= 30 слов).
+  3. Посети не более {{max_sources}} источников.
+  4. Верни JSON с полями `summary` (язык: {{language}}) и `citations`.
+
+  Требования:
+  - Никаких домыслов: всё, что не подкреплено источником, помечай как "unverified".
+  - Ни один URL не должен повторяться в `citations`.

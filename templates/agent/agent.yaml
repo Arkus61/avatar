@@ -1,0 +1,83 @@
+# ============================================================================
+# Agent manifest — единый источник правды для шаблона агента.
+# Значения в <...> должны быть переопределены при клонировании шаблона.
+# ============================================================================
+
+agent:
+  id: "<org>.<agent-id>"              # уникальный ID, пример: "avatar.research-lead"
+  name: "<Human-Readable Name>"       # отображаемое имя (Agent Card, логи)
+  version: "0.1.0"
+  description: >
+    Кратко: что умеет агент, в каких задачах его имеет смысл звать.
+  owner: "<team-or-user>"
+  tags: ["template", "a2a", "mcp"]
+
+# ---------------------------- Модель/провайдер ------------------------------
+llm:
+  provider: "openai"                  # openai | anthropic | azure | ollama | custom
+  model: "gpt-4.1-mini"
+  temperature: 0.2
+  max_tokens: 4096
+  # Ключи/endpoint берём из .env, не хранить здесь.
+
+# ------------------------------- Инструкции ---------------------------------
+instructions:
+  # Файлы загружаются и конкатенируются в system-prompt в алфавитном порядке.
+  dir: "instructions"
+  order:
+    - "00-system.md"
+    - "10-tool-use.md"
+    - "20-skills.md"
+    - "30-a2a-protocol.md"
+    - "40-safety.md"
+
+# ------------------------------- BMAD persona -------------------------------
+persona:
+  file: "persona/agent.md"
+  customize: "persona/customize.yaml"
+
+# --------------------------------- MCP --------------------------------------
+mcp:
+  config: "mcp/mcp.config.json"
+  manifest: "mcp/tools.manifest.yaml"
+  # Поведение при старте: запускаем только серверы, помеченные autostart=true.
+  autostart: true
+  connect_timeout_sec: 15
+
+# -------------------------------- Скиллы ------------------------------------
+skills:
+  dir: "skills"
+  # Если true — дополнительно публикуем как A2A-скиллы.
+  publish_to_a2a: true
+
+# ----------------------------------- A2A ------------------------------------
+a2a:
+  enabled: true
+  card: "a2a/agent-card.json"
+  server:
+    host: "0.0.0.0"
+    port: 7701
+    public_url: "http://localhost:7701"   # попадает в Agent Card как `url`
+  client:
+    default_timeout_sec: 60
+    max_retries: 2
+    retry_backoff_sec: 2
+  # Белый список партнёрских агентов по Agent Card URL (пусто = разрешить всех).
+  allow_peers: []
+  # Какие локальные скиллы публикуем наружу. "*" = все.
+  expose_skills: ["*"]
+
+# ------------------------------- Память -------------------------------------
+memory:
+  short_term:
+    max_messages: 40
+  episodic:
+    enabled: true
+    backend: "file"                   # file | postgres | redis
+    path: "_state/episodic.jsonl"
+
+# ------------------------------ Наблюдаемость -------------------------------
+telemetry:
+  log_level: "INFO"
+  trace_tool_calls: true
+  trace_a2a: true

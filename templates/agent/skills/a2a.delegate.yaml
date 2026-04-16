@@ -1,0 +1,50 @@
+id: a2a.delegate
+name: "Delegate to peer agent"
+aliases: ["delegate", "ask-peer"]
+version: "0.1.0"
+description: >
+  Делегирует задачу другому агенту по A2A. Возвращает результат целевого скилла
+  с сохранением trace_id.
+tags: ["a2a", "meta"]
+
+handler: "python:runtime.handlers.a2a:delegate"
+
+tools: []
+
+peers: []   # пусто = разрешены все пиры из agent.yaml.a2a.peers
+
+inputs:
+  peer:
+    type: string
+    required: true
+    description: "ID или Agent Card URL партнёра."
+  skill_id:
+    type: string
+    required: true
+    description: "skill_id, который нужно выполнить на стороне партнёра."
+  input:
+    type: object
+    required: true
+    description: "Аргументы целевого скилла."
+  stream:
+    type: boolean
+    default: true
+  deadline_sec:
+    type: integer
+    default: 120
+
+outputs:
+  status:
+    type: string
+  output:
+    type: object
+  events:
+    type: array
+    description: "Список полученных SSE-событий."
+
+limits:
+  tool_call_budget: 1
+  max_duration_sec: 180
+  max_delegation_depth: 3
+
+expose_a2a: false   # мета-скилл, наружу не публикуем

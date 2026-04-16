@@ -1,0 +1,37 @@
+# Пользовательская кастомизация персоны. Все поля опциональны — переопределяют
+# значения из persona/agent.md без изменения самого шаблона.
+
+agent:
+  metadata:
+    name: ""          # если задано — переопределяет имя в Agent Card и логах
+    icon: ""
+
+persona:
+  role: ""
+  identity: ""
+  communication_style: ""
+  principles: []
+
+# Дополнительные критические шаги, исполняемые после стандартного activation.
+critical_actions: []
+# Пример:
+# critical_actions:
+#   - "Если при старте найден файл _state/pending_tasks.jsonl — продолжить их исполнение."
+
+# Долговременные заметки, которые агент держит в system-prompt.
+memories: []
+# Пример:
+# memories:
+#   - "Пользователь предпочитает ответы на русском, код — на английском."
+
+# Ручные пункты меню, которые добавляются к автогенерируемым из skills/.
+menu: []
+# Пример:
+# menu:
+#   - trigger: "daily-sync"
+#     skill: "a2a.delegate"
+#     args: { peer: "team-lead", skill_id: "standup.summary" }
+#     description: "Запросить свод stand-up у team-lead-агента"
+
+# Дополнительные inline-промпты (для action="#id" хендлеров).
+prompts: []

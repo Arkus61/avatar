@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "id": "<org>.<agent-id>",
+  "name": "<Human-Readable Name>",
+  "description": "Короткое описание возможностей агента (подтягивается из agent.yaml).",
+  "version": "0.1.0",
+  "url": "http://localhost:7701",
+  "documentation_url": "http://localhost:7701/docs",
+  "provider": {
+    "name": "<team-or-user>",
+    "url": "https://example.org"
+  },
+  "auth": {
+    "schemes": ["none"],
+    "notes": "В проде включить bearer|mTLS|oidc и указать issuer."
+  },
+  "capabilities": {
+    "streaming": true,
+    "push_notifications": false,
+    "file_uploads": false,
+    "multi_turn": true
+  },
+  "modalities": {
+    "input": ["text", "data"],
+    "output": ["text", "data"]
+  },
+  "preferred_language": "en",
+  "skills": [
+    {
+      "id": "research.web",
+      "name": "Web Research",
+      "description": "Ищет источники и возвращает резюме с цитатами.",
+      "tags": ["research", "read-only"],
+      "input_schema": {
+        "type": "object",
+        "required": ["query"],
+        "properties": {
+          "query": { "type": "string" },
+          "max_sources": { "type": "integer", "default": 5 },
+          "language": { "type": "string", "default": "ru" }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": ["summary", "citations"],
+        "properties": {
+          "summary": { "type": "string" },
+          "citations": { "type": "array" }
+        }
+      }
+    },
+    {
+      "id": "code.review",
+      "name": "Code Review",
+      "description": "Ревью изменений в репозитории.",
+      "tags": ["code", "read-only"]
+    }
+  ],
+  "endpoints": {
+    "tasks": "/a2a/v1/tasks",
+    "task": "/a2a/v1/tasks/{task_id}",
+    "events": "/a2a/v1/tasks/{task_id}/events",
+    "messages": "/a2a/v1/tasks/{task_id}/messages"
+  }
+}

@@ -1,0 +1,42 @@
+id: code.review
+name: "Code Review"
+aliases: ["review", "ревью"]
+version: "0.1.0"
+description: >
+  Делает ревью изменений в репозитории: корректность, читаемость, безопасность, тесты.
+tags: ["code", "read-only"]
+
+handler: "python:runtime.handlers.a2a:noop"
+# Альтернативно можно оставить llm + tools=[filesystem:read_file],
+# но для демонстрации переопределяем python-хендлером, см. runtime/handlers/.
+
+tools:
+  - "filesystem:read_file"
+  - "filesystem:list_directory"
+
+inputs:
+  repo_path:
+    type: string
+    required: true
+    description: "Локальный путь к репозиторию (должен быть внутри AGENT_WORKDIR)."
+  diff_ref:
+    type: string
+    default: "HEAD~1..HEAD"
+    description: "Диапазон коммитов для ревью."
+  focus:
+    type: array
+    description: "Список аспектов: security|perf|tests|style."
+    default: ["security", "tests"]
+
+outputs:
+  findings:
+    type: array
+    description: "Список {severity, file, line, message, suggestion}."
+  overall:
+    type: string
+
+limits:
+  tool_call_budget: 20
+  max_duration_sec: 180
+
+expose_a2a: true

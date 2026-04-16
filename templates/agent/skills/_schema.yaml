@@ -1,0 +1,77 @@
+# JSON-Schema-лайт для проверки скиллов.
+# runtime/skill_registry.py валидирует каждый YAML-файл по этой схеме.
+
+$id: "agent-template/skills/_schema.yaml"
+type: object
+required: [id, name, version, handler, inputs, outputs]
+additionalProperties: false
+properties:
+  id:
+    type: string
+    pattern: "^[a-z0-9][a-z0-9._-]*$"
+    description: "Стабильный идентификатор (например, research.web)."
+  name:
+    type: string
+  aliases:
+    type: array
+    items: { type: string }
+    default: []
+  version:
+    type: string
+    pattern: "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+  description:
+    type: string
+  tags:
+    type: array
+    items: { type: string }
+    default: []
+  handler:
+    description: "llm | python:<module.func> | a2a:<peer-id>"
+    oneOf:
+      - { const: "llm" }
+      - { type: string, pattern: "^python:[A-Za-z_][\\w.]*$" }
+      - { type: string, pattern: "^a2a:[A-Za-z0-9._-]+$" }
+  tools:
+    description: "Whitelist MCP-инструментов (server:tool). Подмножество tools.manifest.yaml."
+    type: array
+    items:
+      type: string
+      pattern: "^[A-Za-z0-9._-]+:[A-Za-z0-9._-]+$"
+    default: []
+  peers:
+    description: "Разрешённые A2A-пиры, если handler=a2a:<peer>."
+    type: array
+    items: { type: string }
+    default: []
+  inputs:
+    type: object
+    additionalProperties:
+      type: object
+      required: [type]
+      properties:
+        type: { enum: [string, integer, number, boolean, object, array] }
+        description: { type: string }
+        required: { type: boolean, default: false }
+        default: {}
+        enum: { type: array }
+  outputs:
+    type: object
+    additionalProperties:
+      type: object
+      required: [type]
+      properties:
+        type: { enum: [string, integer, number, boolean, object, array] }
+        description: { type: string }
+  prompt:
+    type: string
+    description: "Шаблон под-промпта для handler=llm. Доступны {{placeholders}} из inputs."
+  limits:
+    type: object
+    properties:
+      tool_call_budget: { type: integer, minimum: 1, default: 8 }
+      max_duration_sec: { type: integer, minimum: 1, default: 120 }
+      max_delegation_depth: { type: integer, minimum: 0, default: 3 }
+  expose_a2a:
+    type: boolean
+    default: true
+    description: "Публиковать ли скилл в Agent Card."

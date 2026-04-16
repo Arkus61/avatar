@@ -1,0 +1,28 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/mcp-config.json",
+  "servers": {
+    "filesystem": {
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "${AGENT_WORKDIR:-./_state}"],
+      "autostart": true,
+      "description": "Ограниченный FS-доступ в рабочий каталог агента."
+    },
+    "fetch": {
+      "transport": "stdio",
+      "command": "uvx",
+      "args": ["mcp-server-fetch"],
+      "autostart": true,
+      "description": "HTTP fetch для веб-исследования."
+    },
+    "internal-http": {
+      "transport": "http",
+      "url": "http://localhost:7801/mcp",
+      "autostart": false,
+      "description": "Пример подключения корпоративного HTTP MCP-сервера.",
+      "headers": {
+        "Authorization": "Bearer ${INTERNAL_MCP_TOKEN}"
+      }
+    }
+  }
+}
