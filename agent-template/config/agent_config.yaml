@@ -1,0 +1,58 @@
+agent:
+  id: "agent-001"
+  name: "MyAgent"
+  version: "1.0.0"
+  description: "Универсальный агент с MCP инструментами, скиллами и поддержкой A2A протокола"
+
+  # A2A сервер этого агента
+  a2a:
+    host: "0.0.0.0"
+    port: 8100
+    endpoint: "/a2a"
+    # Адреса других агентов (реестр)
+    peers:
+      - id: "agent-002"
+        url: "http://agent-002:8101/a2a"
+        capabilities: ["summarize", "translate"]
+      - id: "agent-003"
+        url: "http://agent-003:8102/a2a"
+        capabilities: ["search", "image_analysis"]
+
+  # MCP серверы, к которым подключается агент
+  mcp:
+    servers:
+      - name: "filesystem"
+        transport: "stdio"
+        command: ["npx", "-y", "@modelcontextprotocol/server-filesystem", "/tmp"]
+      - name: "mongodb"
+        transport: "stdio"
+        command: ["npx", "-y", "@modelcontextprotocol/server-mongodb"]
+        env:
+          MONGODB_URI: "${MONGODB_URI}"
+      - name: "brave-search"
+        transport: "stdio"
+        command: ["npx", "-y", "@modelcontextprotocol/server-brave-search"]
+        env:
+          BRAVE_API_KEY: "${BRAVE_API_KEY}"
+
+  # Активные скиллы
+  skills:
+    enabled:
+      - "text_analysis"
+      - "data_retrieval"
+      - "summarization"
+      - "agent_delegation"
+
+  # LLM backend
+  llm:
+    provider: "openai"           # openai | anthropic | ollama | azure
+    model: "gpt-4o-mini"
+    temperature: 0.3
+    max_tokens: 4096
+    api_key_env: "OPENAI_API_KEY"
+
+  # Системные инструкции
+  instructions:
+    system_prompt_file: "instructions/system_prompt.md"
+    persona_file: "instructions/persona.md"
+    rules_file: "instructions/rules.md"
