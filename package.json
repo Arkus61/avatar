@@ -3,14 +3,14 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "lint": "npm --prefix apps/web run lint && python -m compileall -q apps/api/app",
-    "typecheck": "npm --prefix apps/web run typecheck && python -m compileall -q apps/api/app",
-    "test": "npm --prefix apps/web run test && python -m unittest discover -s apps/api/tests -p \"test_*.py\" -v",
-    "build": "npm --prefix apps/web run build && python -m compileall -q apps/api/app",
+    "lint": "npm --prefix apps/web run lint && python3 -m compileall -q apps/api/app",
+    "typecheck": "npm --prefix apps/web run typecheck && python3 -m compileall -q apps/api/app",
+    "test": "npm --prefix apps/web run test && python3 -m unittest discover -s apps/api/tests -p \"test_*.py\" -v",
+    "build": "npm --prefix apps/web run build && python3 -m compileall -q apps/api/app",
     "dev:web": "npm --prefix apps/web run dev --",
-    "dev:api": "python -m uvicorn app.main:app --reload --port 8000 --app-dir apps/api",
+    "dev:api": "python3 -m uvicorn app.main:app --reload --port 8000 --app-dir apps/api",
     "db:up": "docker compose up -d postgres",
     "db:down": "docker compose down",
-    "check:local-env": "python scripts/local_env_check.py"
+    "check:local-env": "python3 scripts/local_env_check.py"
   }
 }
